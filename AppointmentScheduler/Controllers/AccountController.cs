@@ -69,7 +69,7 @@ namespace AppointmentScheduler.Controllers
                     Email=model.Email
                 };
 
-                var result = await _userManager.CreateAsync(user);
+                var result = await _userManager.CreateAsync(user,model.Password);
                 if (result.Succeeded)
                 {
                     await _userManager.AddToRoleAsync(user, model.RoleName);
@@ -79,7 +79,7 @@ namespace AppointmentScheduler.Controllers
                 foreach(var error in result.Errors) { ModelState.AddModelError("", error.Description); }
                 
             }
-            return View();
+            return View(model);
         }
 
         [HttpPost]
