@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppointmentScheduler", "AppointmentScheduler\AppointmentScheduler.csproj", "{449D018F-52AD-4C8C-B25C-93C59CC53504}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{449D018F-52AD-4C8C-B25C-93C59CC53504}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{449D018F-52AD-4C8C-B25C-93C59CC53504}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{449D018F-52AD-4C8C-B25C-93C59CC53504}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{449D018F-52AD-4C8C-B25C-93C59CC53504}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CF65AAFA-AA9F-4335-946A-DE38500856B2}
+	EndGlobalSection
+EndGlobal
