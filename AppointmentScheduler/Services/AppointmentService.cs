@@ -1,6 +1,7 @@
 ﻿using AppointmentScheduler.Models;
 using AppointmentScheduler.Models.ViewModels;
 using AppointmentScheduler.Utility;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,15 +12,19 @@ namespace AppointmentScheduler.Services
     public class AppointmentService : IAppointmentService
     {
         private readonly ApplicationDbContext _dbContext;
-        public AppointmentService(ApplicationDbContext dbcontext)
+        private readonly IEmailSender _emailSender;
+        public AppointmentService(ApplicationDbContext dbcontext, IEmailSender emailSender)
         {
             _dbContext = dbcontext;
+            _emailSender = emailSender;
         }
 
         public async Task<int> AddUpdate(AppointmentViewModel model)
         {
             var startDate = DateTime.Parse(model.StartDate);
             var endDate = DateTime.Parse(model.StartDate).AddMinutes(Convert.ToDouble(model.Duration));
+            var patient = _dbContext.Users.FirstOrDefault(x => x.Id == model.PatientId);
+            var doctor = _dbContext.Users.FirstOrDefault(x => x.Id == model.DoctorId);
             if (model != null && model.Id > 0)
             {
                 //update
@@ -41,6 +46,11 @@ namespace AppointmentScheduler.Services
                     AdminId = model.AdminId
                 };
 
+                await _emailSender.SendEmailAsync(doctor.Email, "Appointment Created",
+                    $"Your appoint with {patient.Name} is Created and in Pending Status");
+
+                await _emailSender.SendEmailAsync(patient.Email, "Appointment Created",
+                    $"Your appoint with {doctor.Name} is Created and in Pending Status");
                 _dbContext.Appointments.Add(appointment);
                 await _dbContext.SaveChangesAsync();
                 return 2;
