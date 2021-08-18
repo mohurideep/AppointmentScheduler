@@ -47,6 +47,28 @@ namespace AppointmentScheduler.Services
             }
         }
 
+        public async Task<int> ConfirmAppointmentById(int Id)
+        {
+            var appointment = _dbContext.Appointments.FirstOrDefault(x => x.Id == Id);
+            if (appointment != null)
+            {
+                appointment.IsDoctorApproved = true;
+                return await _dbContext.SaveChangesAsync();
+            }
+            return 0;
+        }
+
+        public async Task<int> DeleteAppointmentById(int Id)
+        {
+            var appointment = _dbContext.Appointments.FirstOrDefault(x => x.Id == Id);
+            if (appointment != null)
+            {
+                _dbContext.Appointments.Remove(appointment);
+                return await _dbContext.SaveChangesAsync();
+            }
+            return 0;
+        }
+
         public List<AppointmentViewModel> DoctorsEventById(string doctorId)
         {
             return _dbContext.Appointments.Where(x => x.DoctorId == doctorId).ToList().Select(c => new AppointmentViewModel()

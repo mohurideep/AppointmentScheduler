@@ -78,15 +78,22 @@ function onShowModal(obj, isEventDetail) {
         $('#lblPatientName').html(obj.patientName);
         $('#id').val(obj.id);
         if (obj.isDoctorApproved) {
+            $('#btnConfirm').addClass("d-none");
+            $('#btnSubmit').addClass("d-none");
             $('#lblStatus').html('Approved');
         }
         else {
             $('#lblStatus').html('Pending');
+            $('#btnSubmit').removeClass("d-none");
+            $('#btnConfirm').removeClass("d-none");
         }
+        $('#btnDelet').removeClass("d-none");
     }
     else {
         $('#appointmentDate').val(obj.startStr + " " + new moment().format("hh:mm A"));
         $('#id').val(0);
+        $('#btnDelet').addClass("d-none");
+        $('#btnSubmit').removeClass("d-none");
     }
     $('#appointmentInput').modal("show");
 }
@@ -97,8 +104,6 @@ function onCloseModal() {
     $('#title').val('');
     $('#description').val('');
     $('#appointmentDate').val('');
-    $('#duration').val('');
-    $('#patientId').val('');
     $('#appointmentInput').modal("hide");
 }
 
@@ -174,4 +179,48 @@ function getEventDetailsByEventId(info) {
 
 function onDoctorChange() {
     calendar.refetchEvents();
+}
+
+function onConfirm() {
+    var id = parseInt($('#id').val());
+    $.ajax({
+        url: routeURL + '/api/Appointment/ConfirmAppointment/' + id,
+        type: 'GET',
+        dataType: 'JSON',
+        success: function (response) {
+            if (response.status === 1) {
+                $.notify(response.message, "success");
+                calendar.refetchEvents();
+                onCloseModal();
+            }
+            else {
+                $.notify(response.message, "error");
+            }
+        },
+        error: function (xhr) {
+            $.notify("Error", "error")
+        }
+    });
+}
+
+function onDeleteAppointment() {
+    var id = parseInt($('#id').val());
+    $.ajax({
+        url: routeURL + '/api/Appointment/DeleteAppointment/' + id,
+        type: 'GET',
+        dataType: 'JSON',
+        success: function (response) {
+            if (response.status === 1) {
+                $.notify(response.message, "success");
+                calendar.refetchEvents();
+                onCloseModal();
+            }
+            else {
+                $.notify(response.message, "error");
+            }
+        },
+        error: function (xhr) {
+            $.notify("Error", "error")
+        }
+    });
 }
