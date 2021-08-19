@@ -51,12 +51,12 @@ namespace AppointmentScheduler.Controllers
 
         public async Task<IActionResult> Register()
         {
-            if(!_roleManager.RoleExistsAsync(Helper.Admin).GetAwaiter().GetResult())
-            {
-                await _roleManager.CreateAsync(new IdentityRole(Helper.Admin));
-                await _roleManager.CreateAsync(new IdentityRole(Helper.Doctor));
-                await _roleManager.CreateAsync(new IdentityRole(Helper.Patient));
-            }
+        //    if(!_roleManager.RoleExistsAsync(Helper.Admin).GetAwaiter().GetResult())
+        //    {
+        //        await _roleManager.CreateAsync(new IdentityRole(Helper.Admin));
+        //        await _roleManager.CreateAsync(new IdentityRole(Helper.Doctor));
+        //        await _roleManager.CreateAsync(new IdentityRole(Helper.Patient));
+        //    }
             return View();
         }
 

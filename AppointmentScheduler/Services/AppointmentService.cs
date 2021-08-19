@@ -28,6 +28,17 @@ namespace AppointmentScheduler.Services
             if (model != null && model.Id > 0)
             {
                 //update
+                var appointment = _dbContext.Appointments.FirstOrDefault(x => x.Id == model.Id);
+                appointment.Title = model.Title;
+                appointment.Description = model.Description;
+                appointment.StartDate = startDate;
+                appointment.EndDate = endDate;
+                appointment.Duration = model.Duration;
+                appointment.DoctorId = model.DoctorId;
+                appointment.PatientId = model.PatientId;
+                appointment.IsDoctorApproved = false;
+                appointment.AdminId = model.AdminId;
+                await _dbContext.SaveChangesAsync();
                 return 1;
             }
             else
